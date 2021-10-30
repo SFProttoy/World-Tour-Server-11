@@ -23,6 +23,7 @@ async function run() {
     await client.connect();
     const database = client.db("world_tour");
     const offerCollection = database.collection("offers");
+    const bookingCollection = database.collection("bookings");
 
     // GET Offers API
     app.get("/offers", async (req, res) => {
@@ -38,6 +39,41 @@ async function run() {
       const query = { _id: ObjectId(id) };
       const offer = await offerCollection.findOne(query);
       res.send(offer);
+    });
+
+    // POST bookings API
+
+    app.post("/bookings", async (req, res) => {
+      const booking = req.body;
+      const result = await bookingCollection.insertOne(booking);
+      res.send(result);
+    });
+
+    // all bookings
+
+    app.get("/bookings", async (req, res) => {
+      const cursor = await bookingCollection.find({});
+      const bookings = await cursor.toArray();
+      res.send(bookings);
+    });
+
+    // my bookings
+
+    app.get("/bookings/:email", async (req, res) => {
+      const result = await bookingCollection
+        .find({ email: req.params.email })
+        .toArray();
+      res.send(result);
+    });
+
+    // delete booking
+
+    app.delete("/bookings/:id", async (req, res) => {
+      const result = await bookingCollection.deleteOne({
+        _id: ObjectId(req.params.id),
+      });
+
+      res.send(result);
     });
   } finally {
     // await client.close();
