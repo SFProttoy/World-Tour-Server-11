@@ -41,6 +41,13 @@ async function run() {
       res.send(offer);
     });
 
+    // Add a new Tour
+    app.post("/offers", async (req, res) => {
+      const offer = req.body;
+      const result = await offerCollection.insertOne(offer);
+      res.send(result);
+    });
+
     // POST bookings API
 
     app.post("/bookings", async (req, res) => {
@@ -75,6 +82,21 @@ async function run() {
 
       res.send(result);
     });
+
+    // Update status
+
+    app.put("/bookings/:id", async (req, res) => {
+      const id = req.params.id;
+      const updateUserStatus = req.body;
+      const filter = { _id: ObjectId(id) };
+      const updateDoc = {
+        $set: {
+          status: updateUserStatus.status,
+        },
+      };
+      const result = await bookingCollection.updateOne(filter, updateDoc);
+      res.send(result);
+    });
   } finally {
     // await client.close();
   }
@@ -85,10 +107,6 @@ run().catch(console.dir);
 app.get("/", (req, res) => {
   res.send("Running the Server");
 });
-
-//   app.get("/hello", (req, res) => {
-//     res.send("Hello Updated Here");
-//   });
 
 app.listen(port, () => {
   console.log("WorldTour Server port", port);
