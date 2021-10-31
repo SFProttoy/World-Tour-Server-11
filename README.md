@@ -1,13 +1,13 @@
-# WorldTour
+# WorldTour Server
 
 <h5>
-We are offering world tours. World's most popular places where people want to make them relax and happy. Our packages are reasonable and suitable for any of our customers. We happily invite you just visit our website and get your desired service with your loveable family.
+Here, two APIs are used. One is offers where all of tour packages are shown. Another is bookings where user's all bookings are shown.
 </h5>
 
-Our site link: ().
+Our site link: (https://dreadful-cemetery-54829.herokuapp.com/).
 
-<li>Most popular places tours are available.</li>
-<li>Book suitable packages.</li>
-<li>See your orders and cancel it if needed.</li>
-<li>See other orders.</li>
-<li>Add a new tour offer.</li>
+<li>Axios is used.</li>
+<li>Get specific data using _id.</li>
+<li>Get updated using PUT method.</li>
+<li>DELETE method is used.</li>
+<li>POST method is used for insert data.</li>
